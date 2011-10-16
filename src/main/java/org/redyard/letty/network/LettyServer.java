@@ -1,5 +1,5 @@
 /*******************************************************************************
- * This file (LettyServer.java) is part of Letty project
+ * This file (LettyServer.java) is part of "Letty" project
  * 
  * Copyright (c) 2010-2011 RedYard Inc.
  * 
@@ -24,6 +24,8 @@
 
 package org.redyard.letty.network;
 
+import org.redyard.letty.config.ServerConfig;
+
 /**
  * @author =Troy=
  * @version 1.0
@@ -31,7 +33,8 @@ package org.redyard.letty.network;
  */
 public class LettyServer {
 
-  public LettyServer() {
+  public LettyServer(ServerConfig config, ConnectionFactory factory) {
 
   }
+  
 }
