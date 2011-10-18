@@ -24,6 +24,11 @@
 
 package org.redyard.letty.network;
 
+import java.io.IOException;
+import java.nio.channels.SocketChannel;
+
+import org.redyard.letty.network.dispatcher.Dispatcher;
+
 /**
  * @author =Troy=
  * @version 1.0
@@ -31,6 +36,6 @@ package org.redyard.letty.network;
  */
 public interface ConnectionFactory {
 
-  public Connection Create();
+  public Connection Create(SocketChannel channel, Dispatcher dispatcher) throws IOException;
 
 }

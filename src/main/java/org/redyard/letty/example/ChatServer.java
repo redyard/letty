@@ -1,5 +1,5 @@
 /*******************************************************************************
- * This file (Connection.java) is part of "Letty" project
+ * This file (SimpleChatServer.java) is part of "Letty" project
  * 
  * Copyright (c) 2010-2011 RedYard Inc.
  * 
@@ -22,63 +22,38 @@
  * SOFTWARE.
  ******************************************************************************/
 
-package org.redyard.letty.network;
+package org.redyard.letty.example;
 
-import java.net.InetAddress;
-import java.net.Socket;
-import java.nio.channels.ClosedChannelException;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.SocketChannel;
-
-import org.redyard.letty.network.dispatcher.Dispatcher;
+import org.redyard.letty.config.ConfigurationService;
+import org.redyard.letty.logging.LoggingService;
+import org.redyard.letty.network.LettyServer;
+import org.redyard.letty.service.MemoryMonitor;
+import org.redyard.letty.service.ServiceProvider;
+import org.redyard.letty.util.Profiler;
 
 /**
  * @author =Troy=
  * @version 1.0
  * @created Oct 17, 2011
  */
-public abstract class Connection {
+public class ChatServer {
 
-  private final SocketChannel channel;
-  private final Dispatcher dispatcher;
-  private SelectionKey key;
-  private String ip;
-  private int port;
+  public static void main(String... args) {
+	Profiler.Instance();
 
-  public Connection(SocketChannel channel, Dispatcher dispatcher) throws ClosedChannelException {
-	this.channel = channel;
-	this.dispatcher = dispatcher;
-	this.dispatcher.Register( this.channel, SelectionKey.OP_READ, this );
-	if ( channel != null ) {
-	  Socket socket = channel.socket();
-	  if ( socket != null ) {
-		InetAddress address = socket.getInetAddress();
-		if ( address != null ) {
-		  ip = address.getHostAddress();
-		  port = socket.getPort();
-		}
-	  }
-	}
-	Connected();
-  }
+	LoggingService.Init();
+	ConfigurationService.Init();
+	ServiceProvider.Init();
 
-  public abstract void Connected();
+	LoggingService LOG = LoggingService.Instance();
 
-  public final Connection SetKey(SelectionKey key) {
-	this.key = key;
-	return this;
-  }
+	LOG.StartSection( "Server" );
+	new LettyServer( new ChatServerConfig(), new ChatConnectionFactory() ).Listen();
+	LOG.EndSection();
 
-  public final SelectionKey Key() {
-	return key;
-  }
+	LOG.StartSection( "Profiling" ).Info( "Server started in " + Profiler.ProfilingTime() + " seconds." ).EndSection();
 
-  public String Ip() {
-	return ip;
-  }
-
-  public int Port() {
-	return port;
+	ServiceProvider.ScheduleNow( new MemoryMonitor(), 600 );
   }
 
 }

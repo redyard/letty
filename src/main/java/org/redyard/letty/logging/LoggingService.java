@@ -2,24 +2,24 @@
  * This file (LoggingService.java) is part of "Letty" project
  * 
  * Copyright (c) 2010-2011 RedYard Inc.
- *  
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
  * 
- * The above copyright notice and this permission notice shall be included
- * in all copies or substantial portions of the Software.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
- * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
- * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  ******************************************************************************/
 
 package org.redyard.letty.logging;
@@ -95,13 +95,25 @@ public class LoggingService implements Logger {
 
   @Override
   public LoggingService Log(LogLevel level, Object message) {
-	Log( level, message );
+	logger.Log( level, message );
 	return this;
   }
 
   @Override
   public LoggingService Log(LogLevel level, Throwable t) {
 	logger.Log( level, t );
+	return this;
+  }
+
+  @Override
+  public LoggingService Debug(Object message) {
+	logger.Debug( message );
+	return this;
+  }
+
+  @Override
+  public LoggingService Debug(Throwable t) {
+	logger.Debug( t );
 	return this;
   }
 
@@ -114,6 +126,42 @@ public class LoggingService implements Logger {
   @Override
   public LoggingService Info(Throwable t) {
 	logger.Info( t );
+	return this;
+  }
+
+  @Override
+  public LoggingService Warning(Object message) {
+	logger.Warning( message );
+	return this;
+  }
+
+  @Override
+  public LoggingService Warning(Throwable t) {
+	logger.Warning( t );
+	return this;
+  }
+
+  @Override
+  public LoggingService Error(Object message) {
+	logger.Error( message );
+	return this;
+  }
+
+  @Override
+  public LoggingService Error(Throwable t) {
+	logger.Error( t );
+	return this;
+  }
+
+  @Override
+  public LoggingService Fatal(Object message) {
+	logger.Fatal( message );
+	return this;
+  }
+
+  @Override
+  public LoggingService Fatal(Throwable t) {
+	logger.Fatal( t );
 	return this;
   }
 

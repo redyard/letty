@@ -1,5 +1,5 @@
 /*******************************************************************************
- * This file (Logger.java) is part of "Letty" project
+ * This file (Acceptor.java) is part of "Letty" project
  * 
  * Copyright (c) 2010-2011 RedYard Inc.
  *  
@@ -22,39 +22,36 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package org.redyard.letty.logging;
+package org.redyard.letty.network.worker;
+
+import java.io.IOException;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+
+import org.redyard.letty.network.ConnectionFactory;
+import org.redyard.letty.network.LettyServer;
 
 /**
  * @author =Troy=
  * @version 1.0
- * @created Oct 17, 2011
+ * @created Oct 18, 2011
  */
-public interface Logger {
+public class Acceptor {
 
-  public Logger Message(Object message);
+  private final ConnectionFactory factory;
+  private final LettyServer server;
 
-  public Logger Log(LogLevel level, Object message);
-
-  public Logger Log(LogLevel level, Throwable t);
-
-  public Logger Debug(Object message);
-
-  public Logger Debug(Throwable t);
+  public Acceptor(ConnectionFactory factory, LettyServer server) {
+	this.factory = factory;
+	this.server = server;
+  }
   
-  public Logger Info(Object message);
-
-  public Logger Info(Throwable t);
+  public final void Accept(SelectionKey key) throws IOException {
+	ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
+    SocketChannel channel = ssc.accept();
+    channel.configureBlocking(false);
+    factory.Create(channel, server.IODispatcher());
+  }
   
-  public Logger Warning(Object message);
-
-  public Logger Warning(Throwable t);
-  
-  public Logger Error(Object message);
-
-  public Logger Error(Throwable t);
-  
-  public Logger Fatal(Object message);
-
-  public Logger Fatal(Throwable t);
-
 }

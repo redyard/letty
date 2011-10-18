@@ -1,5 +1,5 @@
 /*******************************************************************************
- * This file (Logger.java) is part of "Letty" project
+ * This file (AcceptDispatcher.java) is part of "Letty" project
  * 
  * Copyright (c) 2010-2011 RedYard Inc.
  *  
@@ -22,39 +22,35 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package org.redyard.letty.logging;
+package org.redyard.letty.network.dispatcher;
+
+import java.io.IOException;
+import java.nio.channels.SelectionKey;
+import java.util.Set;
 
 /**
  * @author =Troy=
  * @version 1.0
- * @created Oct 17, 2011
+ * @created Oct 18, 2011
  */
-public interface Logger {
+public class AcceptDispatcher extends Dispatcher {
 
-  public Logger Message(Object message);
+  /**
+   * @throws IOException
+   */
+  public AcceptDispatcher(String name) throws IOException {
+	super( name );
+  }
 
-  public Logger Log(LogLevel level, Object message);
-
-  public Logger Log(LogLevel level, Throwable t);
-
-  public Logger Debug(Object message);
-
-  public Logger Debug(Throwable t);
-  
-  public Logger Info(Object message);
-
-  public Logger Info(Throwable t);
-  
-  public Logger Warning(Object message);
-
-  public Logger Warning(Throwable t);
-  
-  public Logger Error(Object message);
-
-  public Logger Error(Throwable t);
-  
-  public Logger Fatal(Object message);
-
-  public Logger Fatal(Throwable t);
+  @Override
+  public void Dispatch() throws IOException {
+	if ( Selector().select() != 0 ) {
+	  Set<SelectionKey> keys = Selector().selectedKeys();
+	  for ( SelectionKey key : keys ) {
+		if ( key.isValid() ) Accept( key );
+	  }
+	  keys.clear();
+	}
+  }
 
 }

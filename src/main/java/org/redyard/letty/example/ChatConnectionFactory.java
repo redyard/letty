@@ -1,5 +1,5 @@
 /*******************************************************************************
- * This file (Logger.java) is part of "Letty" project
+ * This file (ChatConnectionFactory.java) is part of "Letty" project
  * 
  * Copyright (c) 2010-2011 RedYard Inc.
  *  
@@ -22,39 +22,25 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package org.redyard.letty.logging;
+package org.redyard.letty.example;
+
+import java.io.IOException;
+import java.nio.channels.SocketChannel;
+
+import org.redyard.letty.network.Connection;
+import org.redyard.letty.network.ConnectionFactory;
+import org.redyard.letty.network.dispatcher.Dispatcher;
 
 /**
  * @author =Troy=
  * @version 1.0
  * @created Oct 17, 2011
  */
-public interface Logger {
+public class ChatConnectionFactory implements ConnectionFactory {
 
-  public Logger Message(Object message);
-
-  public Logger Log(LogLevel level, Object message);
-
-  public Logger Log(LogLevel level, Throwable t);
-
-  public Logger Debug(Object message);
-
-  public Logger Debug(Throwable t);
-  
-  public Logger Info(Object message);
-
-  public Logger Info(Throwable t);
-  
-  public Logger Warning(Object message);
-
-  public Logger Warning(Throwable t);
-  
-  public Logger Error(Object message);
-
-  public Logger Error(Throwable t);
-  
-  public Logger Fatal(Object message);
-
-  public Logger Fatal(Throwable t);
+  @Override
+  public Connection Create(SocketChannel channel, Dispatcher dispatcher) throws IOException {
+	return new ChatConnection( channel, dispatcher );
+  }
 
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * This file (SimpleChatServer.java) is part of "Letty" project
+ * This file (IODispatcher.java) is part of "Letty" project
  * 
  * Copyright (c) 2010-2011 RedYard Inc.
  *  
@@ -22,32 +22,27 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package org.redyard.letty.example;
+package org.redyard.letty.network.dispatcher;
 
-import org.redyard.letty.config.ConfigurationService;
-import org.redyard.letty.logging.LoggingService;
-import org.redyard.letty.service.MemoryMonitor;
-import org.redyard.letty.service.ServiceProvider;
-import org.redyard.letty.util.Profiler;
+import java.io.IOException;
 
 /**
  * @author =Troy=
  * @version 1.0
- * @created Oct 17, 2011
+ * @created Oct 18, 2011
  */
-public class SimpleChatServer {
+public class IODispatcher extends Dispatcher {
 
-  public static void main(String... args) {
-	Profiler.Instance();
+  /**
+   * @throws IOException
+   */
+  public IODispatcher(String name) throws IOException {
+	super(name);
+  }
 
-	LoggingService.Init();
-	ConfigurationService.Init();
-	ServiceProvider.Init();
+  @Override
+  public void Dispatch() throws IOException {
 
-	LoggingService LOG = LoggingService.Instance();
-	LOG.StartSection( "Profiling" ).Info( "Server started in " + Profiler.ProfilingTime() + " seconds." ).EndSection();
-
-	ServiceProvider.ScheduleNow( new MemoryMonitor(), 5 );
   }
 
 }

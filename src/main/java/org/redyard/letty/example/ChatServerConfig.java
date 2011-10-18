@@ -1,5 +1,5 @@
 /*******************************************************************************
- * This file (Logger.java) is part of "Letty" project
+ * This file (ChatServerConfig.java) is part of "Letty" project
  * 
  * Copyright (c) 2010-2011 RedYard Inc.
  *  
@@ -22,39 +22,40 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package org.redyard.letty.logging;
+package org.redyard.letty.example;
+
+import org.redyard.letty.config.ServerConfig;
 
 /**
  * @author =Troy=
  * @version 1.0
  * @created Oct 17, 2011
  */
-public interface Logger {
+public class ChatServerConfig implements ServerConfig {
 
-  public Logger Message(Object message);
+  @Override
+  public String ServerName() {
+	return "Chat Server";
+  }
 
-  public Logger Log(LogLevel level, Object message);
+  @Override
+  public String Host() {
+	return "localhost";
+  }
 
-  public Logger Log(LogLevel level, Throwable t);
+  @Override
+  public int Port() {
+	return 2177;
+  }
 
-  public Logger Debug(Object message);
+  @Override
+  public int ExecutorPoolSize() {
+	return -1;
+  }
 
-  public Logger Debug(Throwable t);
-  
-  public Logger Info(Object message);
-
-  public Logger Info(Throwable t);
-  
-  public Logger Warning(Object message);
-
-  public Logger Warning(Throwable t);
-  
-  public Logger Error(Object message);
-
-  public Logger Error(Throwable t);
-  
-  public Logger Fatal(Object message);
-
-  public Logger Fatal(Throwable t);
+  @Override
+  public int IODispatchersPoolSize() {
+	return 0;
+  }
 
 }
